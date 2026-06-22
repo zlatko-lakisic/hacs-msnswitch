@@ -18,7 +18,7 @@ HACS uses **GitHub Releases** (not tags alone). Each release should ship a zip a
 ### Using GitHub CLI
 
 ```bash
-cd d:/Projects/hacs-msnswitch
+cd path/to/hacs-msnswitch
 
 # After updating manifest.json and committing:
 gh release create v1.0.1 --title "v1.0.1" --notes "Short changelog here."

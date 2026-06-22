@@ -1,11 +1,12 @@
 # Install MSNSwitch integration into a Home Assistant config folder.
 #
 # Usage:
-#   powershell -ExecutionPolicy Bypass -File scripts/install-to-ha.ps1
-#   powershell -ExecutionPolicy Bypass -File scripts/install-to-ha.ps1 -ConfigRoot '\\192.168.89.25\config'
+#   powershell -ExecutionPolicy Bypass -File scripts/install-to-ha.ps1 -ConfigRoot '\\your-ha-host\config'
+#   powershell -ExecutionPolicy Bypass -File scripts/install-to-ha.ps1 -ConfigRoot 'C:\path\to\homeassistant\config'
 
 param(
-    [string]$ConfigRoot = '\\192.168.89.25\config'
+    [Parameter(Mandatory = $true)]
+    [string]$ConfigRoot
 )
 
 $ErrorActionPreference = 'Stop'

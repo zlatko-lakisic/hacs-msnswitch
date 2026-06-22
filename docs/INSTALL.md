@@ -6,7 +6,7 @@ On **each** MSNSwitch web UI:
 
 1. Open `http://<msnswitch-ip>/` and log in.
 2. Go to **System → API Whitelist**.
-3. Add your **Home Assistant server IP** (e.g. `10.0.10.6`).
+3. Add your **Home Assistant server IP** (e.g. the IP shown under Settings → System → Network).
 4. Save.
 
 Without this, the integration will show **invalid auth / Access Denied**.
@@ -20,11 +20,11 @@ Best for testing before the repo is on GitHub or without HACS.
 ### From this repo (Windows + NAS share)
 
 ```powershell
-cd d:\Projects\hacs-msnswitch
-powershell -ExecutionPolicy Bypass -File scripts\install-to-ha.ps1
+cd path\to\hacs-msnswitch
+powershell -ExecutionPolicy Bypass -File scripts\install-to-ha.ps1 -ConfigRoot '\\your-ha-host\config'
 ```
 
-Default target: `\\192.168.89.25\config`. Override with `-ConfigRoot`.
+Use your Home Assistant config path (Samba share, SSH mount, or local folder).
 
 ### Manual copy
 
@@ -82,6 +82,6 @@ After setup you should see per device:
 Test the API from a whitelisted machine:
 
 ```bash
-curl --http1.1 -s --url 'http://10.0.10.252/api/status' \
+curl --http1.1 -s --url 'http://<msnswitch-ip>/api/status' \
   --data 'user=YOUR_USER&password=YOUR_PASSWORD'
 ```

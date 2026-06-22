@@ -50,7 +50,7 @@ See **[docs/INSTALL.md](docs/INSTALL.md)** for full details.
 ### Manual install
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/install-to-ha.ps1
+powershell -ExecutionPolicy Bypass -File scripts/install-to-ha.ps1 -ConfigRoot '\\your-ha-host\config'
 ```
 
 Or copy `custom_components/msnswitch` into your HA `config/custom_components/` folder, then restart.
@@ -85,7 +85,7 @@ Per device, Home Assistant creates entities based on the live API response:
 Test from a whitelisted machine:
 
 ```bash
-curl --http1.1 -s --url 'http://10.0.10.252/api/status' \
+curl --http1.1 -s --url 'http://<msnswitch-ip>/api/status' \
   --data 'user=YOUR_USER&password=YOUR_PASSWORD'
 ```
 
