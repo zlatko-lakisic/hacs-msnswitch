@@ -23,18 +23,30 @@ LOGIN_MARKERS = ("login.asp", "Access Denied", "access denied")
 _MALFORMED_OBJECT_BOUNDARY = re.compile(r"\}\s*\{")
 
 
+def _repair_msnswitch_payload(text: str) -> str:
+    """Repair known UIS-622 /api/status JSON formatting bugs."""
+    payload = text.strip()
+    if _MALFORMED_OBJECT_BOUNDARY.search(payload):
+        payload = _MALFORMED_OBJECT_BOUNDARY.sub("},{", payload)
+    open_braces = payload.count("{")
+    close_braces = payload.count("}")
+    if open_braces > close_braces:
+        payload += "}" * (open_braces - close_braces)
+    return payload
+
+
 def parse_msnswitch_json(text: str) -> dict[str, Any]:
     """Parse MSNSwitch /api/status JSON, repairing known UIS-622 formatting bugs."""
-    payload = text.strip()
+    payload = _repair_msnswitch_payload(text)
+    repaired = payload != text.strip()
+
     try:
         data = json.loads(payload)
-    except ValueError:
-        repaired = _MALFORMED_OBJECT_BOUNDARY.sub("},{", payload)
-        try:
-            data = json.loads(repaired)
-        except ValueError as err:
-            raise ValueError(f"Invalid JSON after repair: {payload[:200]}") from err
-        _LOGGER.debug("Repaired malformed MSNSwitch JSON (missing array commas)")
+    except ValueError as err:
+        raise ValueError(f"Invalid JSON after repair: {payload[:200]}") from err
+
+    if repaired:
+        _LOGGER.debug("Repaired malformed MSNSwitch JSON (UIS-622 firmware)")
 
     if not isinstance(data, dict):
         raise TypeError("MSNSwitch status payload was not an object")
