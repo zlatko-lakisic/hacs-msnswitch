@@ -52,11 +52,14 @@ class MSNSwitchConfigFlow(ConfigFlow, domain=DOMAIN):
 
             try:
                 await api.get_status()
-            except MSNSwitchAuthError:
+            except MSNSwitchAuthError as err:
+                _LOGGER.warning("MSNSwitch auth failed for %s: %s", host, err)
                 errors["base"] = "invalid_auth"
-            except MSNSwitchConnectionError:
+            except MSNSwitchConnectionError as err:
+                _LOGGER.warning("MSNSwitch connect failed for %s: %s", host, err)
                 errors["base"] = "cannot_connect"
-            except aiohttp.ClientError:
+            except aiohttp.ClientError as err:
+                _LOGGER.warning("MSNSwitch HTTP error for %s: %s", host, err)
                 errors["base"] = "cannot_connect"
             else:
                 return self.async_create_entry(
