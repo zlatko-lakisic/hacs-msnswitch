@@ -1,6 +1,10 @@
 ---
 version: "1.0.0"
 ---
+<p align="center">
+  <img src="https://raw.githubusercontent.com/zlatko-lakisic/hacs-msnswitch/main/images/icon.png" alt="MSNSwitch" width="96">
+</p>
+
 # MSNSwitch
 
 Home Assistant integration for **Proxicast MSNSwitch** / **MSNSwitch2** power switches (UIS-622, UIS-722).

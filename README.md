@@ -1,5 +1,9 @@
 # MSNSwitch — Home Assistant integration (HACS)
 
+<p align="center">
+  <img src="images/icon.png" alt="MSNSwitch" width="128">
+</p>
+
 [![Validate](https://github.com/zlatko-lakisic/hacs-msnswitch/actions/workflows/validate.yml/badge.svg)](https://github.com/zlatko-lakisic/hacs-msnswitch/actions/workflows/validate.yml)
 
 Control **Proxicast MSNSwitch** / **MSNSwitch2** devices (UIS-622, UIS-722) from Home Assistant.
@@ -47,7 +51,10 @@ gh release create v1.0.1 --title "v1.0.1" --notes "Changelog."
 hacs-msnswitch/
 ├── .github/workflows/       # HACS validate + release zip
 ├── custom_components/
-│   └── msnswitch/           # Integration (required HACS path)
+│   └── msnswitch/
+│       └── brand/           # icon.png + logo.png (HA device/integration branding)
+├── images/
+│   └── icon.png             # README / repo branding
 ├── docs/
 │   ├── INSTALL.md
 │   └── RELEASE.md
@@ -63,6 +70,8 @@ hacs-msnswitch/
 
 - `POST /api/status` — outlets and connection checkers
 - `POST /api/control?target=…&action=…` — outlets (`outlet1`, `outlet2`, `outlet_all`) or UIS (`uis` / legacy `us`)
+
+**UIS-622 quirk:** some firmware returns malformed JSON from `/api/status` (missing commas between `connections` objects: `{...}{...}`). The integration repairs this automatically before parsing.
 
 ## License
 

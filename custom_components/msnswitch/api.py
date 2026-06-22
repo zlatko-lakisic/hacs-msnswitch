@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import json
 import logging
+import re
 from typing import Any
 
 import aiohttp
+
+from .const import UIS_TARGETS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -13,6 +17,27 @@ API_STATUS = "/api/status"
 API_CONTROL = "/api/control"
 
 ACCESS_DENIED = "Access Denied"
+
+# UIS-622 (older firmware) omits commas between objects in the connections array: {...}{...}
+_MALFORMED_OBJECT_BOUNDARY = re.compile(r"\}\s*\{")
+
+
+def parse_msnswitch_json(text: str) -> dict[str, Any]:
+    """Parse MSNSwitch /api/status JSON, repairing known UIS-622 formatting bugs."""
+    payload = text.strip()
+    try:
+        data = json.loads(payload)
+    except ValueError:
+        repaired = _MALFORMED_OBJECT_BOUNDARY.sub("},{", payload)
+        try:
+            data = json.loads(repaired)
+        except ValueError as err:
+            raise ValueError(f"Invalid JSON after repair: {payload[:200]}") from err
+        _LOGGER.debug("Repaired malformed MSNSwitch JSON (missing array commas)")
+
+    if not isinstance(data, dict):
+        raise TypeError("MSNSwitch status payload was not an object")
+    return data
 
 
 class MSNSwitchAuthError(Exception):
@@ -94,16 +119,11 @@ class MSNSwitchApi:
             )
 
         try:
-            import json
-
-            data = json.loads(text)
-        except ValueError as err:
+            data = parse_msnswitch_json(text)
+        except (ValueError, TypeError) as err:
             raise MSNSwitchConnectionError(
                 f"Invalid JSON from MSNSwitch: {text[:200]}"
             ) from err
-
-        if not isinstance(data, dict):
-            raise MSNSwitchConnectionError("MSNSwitch status payload was not an object")
 
         return data
 
