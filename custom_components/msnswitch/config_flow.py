@@ -51,6 +51,7 @@ class MSNSwitchConfigFlow(ConfigFlow, domain=DOMAIN):
             )
 
             try:
+                _LOGGER.debug("Validating MSNSwitch at %s", host)
                 await api.get_status()
             except MSNSwitchAuthError as err:
                 _LOGGER.warning("MSNSwitch auth failed for %s: %s", host, err)
@@ -61,6 +62,9 @@ class MSNSwitchConfigFlow(ConfigFlow, domain=DOMAIN):
             except aiohttp.ClientError as err:
                 _LOGGER.warning("MSNSwitch HTTP error for %s: %s", host, err)
                 errors["base"] = "cannot_connect"
+            except Exception:
+                _LOGGER.exception("Unexpected error adding MSNSwitch at %s", host)
+                errors["base"] = "unknown"
             else:
                 return self.async_create_entry(
                     title=f"MSNSwitch {host}",

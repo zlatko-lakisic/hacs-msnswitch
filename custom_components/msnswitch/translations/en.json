@@ -13,7 +13,8 @@
     },
     "error": {
       "cannot_connect": "Could not reach the device or the API returned an error.",
-      "invalid_auth": "Authentication failed or API access denied. Check credentials and add Home Assistant's IP to System → API Whitelist on the MSNSwitch."
+      "invalid_auth": "Authentication failed or API access denied. Check credentials and add Home Assistant's IP to System → API Whitelist on the MSNSwitch.",
+      "unknown": "An unexpected error occurred. Check Settings → System → Logs (filter: msnswitch) for details, then update the integration to the latest version."
     },
     "abort": {
       "already_configured": "This MSNSwitch is already configured."

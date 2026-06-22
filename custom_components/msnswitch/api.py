@@ -125,6 +125,10 @@ class MSNSwitchApi:
             raise MSNSwitchConnectionError(
                 f"Could not reach MSNSwitch at {self._host}: {err}"
             ) from err
+        except Exception as err:
+            raise MSNSwitchConnectionError(
+                f"Unexpected error talking to MSNSwitch at {self._host}: {err}"
+            ) from err
 
         self._classify_response(text)
 
