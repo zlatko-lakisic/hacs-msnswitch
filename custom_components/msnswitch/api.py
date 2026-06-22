@@ -9,7 +9,6 @@ from typing import Any
 from urllib.parse import urlencode
 
 import aiohttp
-from aiohttp import HttpVersion
 
 from .const import UIS_TARGETS
 
@@ -18,7 +17,6 @@ _LOGGER = logging.getLogger(__name__)
 API_STATUS = "/api/status"
 API_CONTROL = "/api/control"
 
-HTTP_11 = HttpVersion(1, 1)
 LOGIN_MARKERS = ("login.asp", "Access Denied", "access denied")
 
 # UIS-622 (older firmware) omits commas between objects in arrays: {...}{...}
@@ -120,7 +118,6 @@ class MSNSwitchApi:
                 params=params,
                 data=body,
                 headers=headers,
-                version=HTTP_11,
                 timeout=aiohttp.ClientTimeout(total=15),
             ) as response:
                 text = await response.text()
