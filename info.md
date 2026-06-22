@@ -1,5 +1,5 @@
 ---
-version: "1.0.2"
+version: "1.0.5"
 ---
 <p align="center">
   <img src="https://raw.githubusercontent.com/zlatko-lakisic/hacs-msnswitch/main/images/icon.png" alt="MSNSwitch" width="96">

@@ -4,8 +4,8 @@ HACS uses **GitHub Releases** (not tags alone). Each release should ship a zip a
 
 ## Steps for a new version
 
-1. **Bump version** in `custom_components/msnswitch/manifest.json` (e.g. `1.0.1`).
-2. **Commit and push** to `main`.
+1. **Bump version** in `custom_components/msnswitch/manifest.json` (e.g. `1.0.6`).
+2. **Commit and push** to `main` — wait for **Validate** and **Hassfest** to pass on GitHub Actions.
 3. **Create a GitHub release** with a tag matching the version:
    - Tag: `v1.0.1` (recommended `v` prefix)
    - Title: `v1.0.1` or a short changelog title
@@ -46,6 +46,14 @@ Every push/PR to `main` runs:
 
 - [HACS validation](.github/workflows/validate.yml)
 - [Hassfest](.github/workflows/hassfest.yml)
+
+### Common CI failures
+
+| Workflow | Error | Fix |
+|----------|-------|-----|
+| **Hassfest** | `extra keys not allowed @ data['homeassistant']` | Do **not** put `homeassistant` in `manifest.json`. Minimum HA version belongs in `hacs.json` only. |
+| **Validate** | `no valid topics` / `no description` | Set repo description and topics via `gh repo edit` (see below). |
+| **Validate** | `does not provide brand assets` | Add `custom_components/msnswitch/brand/icon.png` (and optionally `logo.png`). |
 
 ### GitHub repository settings (HACS checks)
 
