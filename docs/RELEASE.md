@@ -40,4 +40,26 @@ gh release create v1.0.1 --title "v1.0.1" --notes "Short changelog here."
 
 ## Validation
 
-Every push/PR to `main` runs [HACS validation](.github/workflows/validate.yml).
+Every push/PR to `main` runs:
+
+- [HACS validation](.github/workflows/validate.yml)
+- [Hassfest](.github/workflows/hassfest.yml)
+
+### GitHub repository settings (HACS checks)
+
+These are **not** in git — set on the GitHub repo (already configured for `zlatko-lakisic/hacs-msnswitch`):
+
+| Check | Requirement |
+|-------|-------------|
+| Description | Short summary on the repo home page |
+| Topics | e.g. `home-assistant`, `homeassistant`, `hacs`, `hacs-integration`, `integration` |
+| Issues | Enabled |
+| Brand | `custom_components/msnswitch/brand/icon.png` in the repo |
+
+```bash
+gh repo edit zlatko-lakisic/hacs-msnswitch \
+  --description "Home Assistant HACS integration for Proxicast MSNSwitch UIS-622/722 smart power switches" \
+  --add-topic home-assistant --add-topic homeassistant --add-topic hacs \
+  --add-topic hacs-integration --add-topic integration --add-topic msnswitch \
+  --enable-issues=true
+```
