@@ -35,6 +35,8 @@ gh release create v1.0.1 --title "v1.0.1" --notes "Short changelog here."
 | Setup | HACS behavior |
 |-------|----------------|
 | `zip_release: true` in `hacs.json` | Downloads `msnswitch.zip` from the selected release |
+
+**Important:** `filename` in `hacs.json` must include the `.zip` extension (e.g. `"msnswitch.zip"`), matching the release asset name exactly.
 | No releases published | Uses files from default branch (`main`) |
 | Releases published | User can pick latest releases or `main` in HACS |
 

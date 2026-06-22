@@ -1,7 +1,7 @@
 {
   "name": "MSNSwitch",
   "content_in_root": false,
-  "filename": "msnswitch",
+  "filename": "msnswitch.zip",
   "homeassistant": "2023.8.0",
   "render_readme": true,
   "zip_release": true
