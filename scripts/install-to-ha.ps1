@@ -21,8 +21,8 @@ if (-not (Test-Path $ConfigRoot)) {
     throw "Home Assistant config path not reachable: $ConfigRoot"
 }
 
-New-Item -ItemType Directory -Force -Path $dstRoot | Out-Null
-Copy-Item -Path $src -Destination $dst -Recurse -Force
+New-Item -ItemType Directory -Force -Path $dst | Out-Null
+Copy-Item -Path (Join-Path $src '*') -Destination $dst -Recurse -Force
 
 Write-Host "Installed MSNSwitch integration to $dst"
 Write-Host "Restart Home Assistant, then: Settings -> Devices & services -> Add integration -> MSNSwitch"
