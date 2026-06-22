@@ -1,12 +1,13 @@
 {
   "domain": "msnswitch",
   "name": "MSNSwitch",
-  "codeowners": ["@zlakisic"],
+  "codeowners": ["@zlatko-lakisic"],
   "config_flow": true,
-  "documentation": "https://github.com/zlakisic/hacs-msnswitch",
+  "documentation": "https://github.com/zlatko-lakisic/hacs-msnswitch",
+  "homeassistant": "2023.8.0",
   "integration_type": "device",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/zlakisic/hacs-msnswitch/issues",
+  "issue_tracker": "https://github.com/zlatko-lakisic/hacs-msnswitch/issues",
   "requirements": [],
   "version": "1.0.0"
 }
